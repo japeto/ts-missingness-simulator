@@ -1,8 +1,6 @@
 # -*- coding: utf-8 -*-
 """
-Create Fri Aug 07 17:23:45
 """
-
 import numpy as np
 import pandas as pd
 import random
@@ -32,7 +30,6 @@ def mcar_method(serie=[], percentage=70, seed=348):
     for idx in indices:
         serie[idx] = np.nan
     return serie
-
 
 # mar_method
 # 

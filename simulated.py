@@ -5,7 +5,7 @@
 import numpy as np
 # import matplotlib
 from datetime import datetime
-from simulated import generator
+from simulator import generator
 from missingness import *
 
 # matplotlib.use('Agg')
@@ -31,7 +31,7 @@ pHaar = np.array([10, 50, 60])
 p1 = 3
 p2 = 5
 nbsimu = 1
-series = simulate(M, n, K, muChoix, varianceError, pHaar, p1, p2)
+series = generator(M, n, K, muChoix, varianceError, pHaar, p1, p2)
 
 # %%
 # Obtaining the serie 
@@ -39,9 +39,8 @@ data_serie = np.array((series[5]["mu"] + series[5]["biais"] + series[5]["erreur1
 data_serie = data_serie.reshape(-1, 1)
 
 # %%
-na_serie = mcar_method(data_serie, 30)
+na_serie = mcar_method(data_serie, percentage=90)
 # mar_method(data_serie, 70)
-
 
 # %%
 now = datetime.now()

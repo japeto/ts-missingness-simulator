@@ -5,6 +5,7 @@ Create Fri Aug 07 17:23:45
 
 import numpy as np
 import pandas as pd
+from skfda.representation.basis import BSplineBasis
 
 ##########################
 ### Simulation of series
@@ -43,7 +44,7 @@ import pandas as pd
 # error term at this position (one column for each specified variance of the 
 # error term)
 
-def generator(M, n, K, muChoix, varianceError, pHaar, p1, p2):
+def generator(M, n, K, muChoix, varianceError, pHaar, p1, p2, degree=3):
     
     #### only 1 series with 4 segments, with a functional part, 100 points. 
     #We specify here only one variance for the error term only.
@@ -70,7 +71,9 @@ def generator(M, n, K, muChoix, varianceError, pHaar, p1, p2):
     Part2[t1] = 1.5
     Part2[t2] = -2
     Part2[t3] = 3
-    biais = Part1 + Part2
+    Part3 = BSplineBasis(domain_range = [min(t), max(t)], n_basis= n + 1, order=3)
+    Part3 = np.array(Part3.knots)
+    biais = Part1 + Part2 + Part3
     
     # construction of the M series
     erreurs = list()
