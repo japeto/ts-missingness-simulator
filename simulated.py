@@ -1,5 +1,4 @@
 # -*- coding: utf-8 -*-
-
 # Load libraries
 # %%
 import numpy as np
@@ -7,11 +6,6 @@ import numpy as np
 from datetime import datetime
 from simulator import generator
 from missingness import *
-
-# matplotlib.use('Agg')
-# import matplotlib as mpl
-# import matplotlib.pyplot as plt
-# from matplotlib.pyplot import figure, title
 
 ############### simular serie
 
@@ -39,12 +33,12 @@ data_serie = np.array((series[5]["mu"] + series[5]["biais"] + series[5]["erreur1
 data_serie = data_serie.reshape(-1, 1)
 
 # %%
-na_serie = mcar_method(data_serie, percentage=90)
-# mar_method(data_serie, 70)
-
-# %%
 now = datetime.now()
 date = now.strftime("%d-%m-%Y")
 
-# %%
-np.savetxt("data/simlated-na-{}.csv".format(str(date)), na_serie, delimiter=",")
+np.savetxt(f"data/simlated-ground-truth.csv", data_serie, delimiter=",")
+
+for percent in [5, 10, 15, 20]:
+    for idx in np.arange(0, 3, 1, dtype=int):
+        na_serie = mcar_method(data_serie, percentage=percent, seed=idx)
+        np.savetxt(f"data/series/simulated-{percent}-{idx}.csv", na_serie, delimiter=",")
